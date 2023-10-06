@@ -11,6 +11,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { key } = (await req.json()) as {
       key: string;
     };
+    console.log("key", key);
 
     let url = `${OPENAI_API_HOST}/v1/models`;
     if (OPENAI_API_TYPE === 'azure') {
@@ -48,6 +49,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     const json = await response.json();
 
+    console.log("json", json);
+
     const models: OpenAIModel[] = json.data
       .map((model: any) => {
         const model_name = (OPENAI_API_TYPE === 'azure') ? model.model : model.id;
@@ -61,6 +64,8 @@ const handler = async (req: Request): Promise<Response> => {
         }
       })
       .filter(Boolean);
+
+    console.log("models", models);
 
     return new Response(JSON.stringify(models), { status: 200 });
   } catch (error) {
