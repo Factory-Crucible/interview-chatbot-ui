@@ -401,3 +401,4 @@ export default function Home() {
     </>
   );
 }
+export { default, getServerSideProps } from './api/home';
